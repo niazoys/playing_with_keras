@@ -1,0 +1,3 @@
+Accuracy with optimizer (SGD): 92.11000204086304
+Accuracy with optimizer (ADAM): 97.13000059127808
+Accuracy with optimizer (RMSprop): 97.43000268936157

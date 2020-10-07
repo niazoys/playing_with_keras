@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-#import tensorflow as tf
-#import tensorflow.keras
+import tensorflow as tf
+import tensorflow.keras
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
@@ -64,34 +64,35 @@ def data():
 
 def plot_curves(history,class_1,act):
     
-    # summarize history for accuracy
+    # summarize history for loss
     plt.plot(history.history['loss'],label="Training Loss")
     plt.plot(history.history['val_loss'],label="Validation Loss")
-    plt.title('model accuracy')
-    plt.title(" Model loss for 1 Neuron Binary Classifier ")
-    plt.ylabel('accuracy')
+    plt.title('Model Loss')
+    plt.title(" Model loss for 64 Neuron Binary Classifier ")
+    plt.ylabel('Loss')
     plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
+    plt.legend(['Training loss', 'Validation loss'], loc='upper right')
     
     plt.savefig(
         "training-validation-losses--64_neuron-binary-classification-{0}-VS- all -{1}-epoches_"+str(act)+".png".format(str(class_1),str(epochs)))
-                                                                                                                                                                                                                 
+
+    plt.clf()                                                                                                                                                                                                 
  
 
 
-    # summarize history for loss
+    # summarize history for  accuracy
     
     plt.plot(history.history['accuracy'])
     plt.plot(history.history['val_accuracy'])
-    plt.title(" Model accuracy for 1 Neuron Binary Classifier ")
-    plt.ylabel('loss')
+    plt.title(" Model accuracy for 64 Neuron Binary Classifier ")
+    plt.ylabel('Accuracy')
     plt.xlabel('epoch')
-    plt.legend(['Training Loss', 'Validation Loss'], loc='upper left')
+    plt.legend(['Training accuracy', 'Validation accuracy'], loc='upper right')
     
     plt.savefig(
         "training-validation-Accuracy--64_neuron-binary-classification-{0}-VS- all -{1}-epoches_"+str(act)+".png".format(str(class_1),str(epochs)))
    
-
+    plt.clf()
 
 def buildNetwork(input_dim,activation_fun):
     model = Sequential()
@@ -107,7 +108,7 @@ def train_model(model,X,Y,valiation_split_size,lr,batch_size,epochs):
 
     :return: model history
     """
-    history = model.fit(X, Y,validation_split=valiation_split_size, epochs=epochs, batch_size=1)
+    history = model.fit(X, Y,validation_split=valiation_split_size, epochs=epochs, batch_size=batch_size)
     
     return history
     
@@ -125,9 +126,9 @@ if __name__ == "__main__":
 
     # hyperparameters
     in_dim = X_train.shape[0]  # 784
-    learning_rate = 0.5
-    batch_size = 64
-    epochs = 1
+    learning_rate = 0.1
+    batch_size = 128
+    epochs = 100
     validation_split_size=0.3
     filepath = "./accuracy_excercise_02.txt"
 
