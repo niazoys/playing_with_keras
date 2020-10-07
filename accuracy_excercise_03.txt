@@ -1,0 +1,9 @@
+Accuracy with optimizer (SGD) and 64 Neurons : 92.30999946594238
+Accuracy with optimizer (ADAM) and 64 Neurons : 97.06000089645386
+Accuracy with optimizer (RMSprop) and 64 Neurons : 97.13000059127808
+Accuracy with optimizer (SGD) and 128 Neurons : 92.30999946594238
+Accuracy with optimizer (ADAM) and 128 Neurons : 97.06000089645386
+Accuracy with optimizer (RMSprop) and 128 Neurons : 97.13000059127808
+Accuracy with optimizer (SGD) and 256 Neurons : 92.30999946594238
+Accuracy with optimizer (ADAM) and 256 Neurons : 97.06000089645386
+Accuracy with optimizer (RMSprop) and 256 Neurons : 97.13000059127808
