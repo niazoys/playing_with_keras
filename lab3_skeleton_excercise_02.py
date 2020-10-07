@@ -8,6 +8,8 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import RMSprop
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 def data():
         #load (first download if necessary) the MNIST dataset
@@ -97,8 +99,8 @@ def plot_curves(history,class_1,act,neuron):
 def buildNetwork(number_neuron,input_dim,activation_fun):
     model = Sequential()
     # Adding the input layer and the first hidden layer with dropout
-    model.add(Dense(units = number_neuron, activation = activation_fun, input_dim =784))
-    model.add(Dense(1,activation='sigmoid',input_dim=64))
+    model.add(Dense(units = number_neuron, activation = activation_fun, input_dim =input_dim))
+    model.add(Dense(1,activation='sigmoid',input_dim=number_neuron))
     model.compile(optimizer = 'SGD', loss = 'binary_crossentropy', metrics = ['accuracy'])
     return model
 
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     X_train, Y_train, X_test, Y_test = data()
 
     # hyperparameters
-    in_dim = X_train.shape[0]  # 784
+    in_dim = X_train.shape[1]  # 784
     learning_rate = 0.1
     batch_size = 128
     epochs = 100

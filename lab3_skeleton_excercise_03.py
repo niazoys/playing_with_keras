@@ -8,6 +8,8 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import RMSprop
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 def data():
         
@@ -96,9 +98,9 @@ def plot_curves(history,act,neuron):
 def buildNetwork(neuron,input_dim,opt):
     model = Sequential()
     # Adding the input layer and the first hidden layer with dropout
-    model.add(Dense(units = neuron, activation = 'relu', input_dim =784))
-    model.add(Dense(units = 10, activation = 'softmax', input_dim =64))
-    model.compile(optimizer = opt, loss = 'binary_crossentropy', metrics = ['accuracy'])
+    model.add(Dense(units = neuron, activation = 'relu', input_dim =input_dim))
+    model.add(Dense(units = 10, activation = 'softmax', input_dim =neuron))
+    model.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
     return model
 
 def train_model(model,X,Y,valiation_split_size,lr,batch_size,epochs):
@@ -126,7 +128,7 @@ if __name__ == "__main__":
     Accuracy_list=[]
 
     # hyperparameters
-    in_dim = X_train.shape[0]  # 784
+    in_dim = X_train.shape[1]  # 784
     learning_rate = 0.1
     epochs = 100
     validation_split_size=0.3
