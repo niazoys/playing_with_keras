@@ -62,19 +62,19 @@ def data():
 
 
 
-def plot_curves(history,class_1,act):
+def plot_curves(history,class_1,act,neuron):
     
     # summarize history for loss
     plt.plot(history.history['loss'],label="Training Loss")
     plt.plot(history.history['val_loss'],label="Validation Loss")
     plt.title('Model Loss')
-    plt.title(" Model loss for 64 Neuron Binary Classifier ")
+    plt.title(" Model loss for " +str(neuron)+ " Neuron Binary Classifier ")
     plt.ylabel('Loss')
     plt.xlabel('epoch')
     plt.legend(['Training loss', 'Validation loss'], loc='upper right')
     
     plt.savefig(
-        "training-validation-losses--64_neuron-binary-classification-{0}-VS- all -{1}-epoches_"+str(act)+".png".format(str(class_1),str(epochs)))
+        "losses--binary-classification-{0}-VS- all -{1}-_"+str(act)+" with neuron "+str(neuron)+".png".format(str(class_1),str(epochs)))
 
     plt.clf()                                                                                                                                                                                                 
  
@@ -84,20 +84,20 @@ def plot_curves(history,class_1,act):
     
     plt.plot(history.history['accuracy'])
     plt.plot(history.history['val_accuracy'])
-    plt.title(" Model accuracy for 64 Neuron Binary Classifier ")
+    plt.title(" Model accuracy for" +str(neuron)+ "Neuron Binary Classifier ")
     plt.ylabel('Accuracy')
     plt.xlabel('epoch')
     plt.legend(['Training accuracy', 'Validation accuracy'], loc='upper right')
     
     plt.savefig(
-        "training-validation-Accuracy--64_neuron-binary-classification-{0}-VS- all -{1}-epoches_"+str(act)+".png".format(str(class_1),str(epochs)))
-   
+        "Accuracy--binary-classification-{0}-VS- all -{1}-_"+str(act)+" with neuron "+str(neuron)+".png".format(str(class_1),str(epochs)))
+
     plt.clf()
 
-def buildNetwork(input_dim,activation_fun):
+def buildNetwork(number_neuron,input_dim,activation_fun):
     model = Sequential()
     # Adding the input layer and the first hidden layer with dropout
-    model.add(Dense(units = 64, activation = activation_fun, input_dim =784))
+    model.add(Dense(units = number_neuron, activation = activation_fun, input_dim =784))
     model.add(Dense(1,activation='sigmoid',input_dim=64))
     model.compile(optimizer = 'SGD', loss = 'binary_crossentropy', metrics = ['accuracy'])
     return model
@@ -120,6 +120,7 @@ if __name__ == "__main__":
     history=[]
     Accuracy_list=[]
     activation=['relu','sigmoid','tanh']
+    number_neuron=[64,128,256]
     # change this to other digits to change 1 vs n
     class_1 = 0
     X_train, Y_train, X_test, Y_test = data()
@@ -131,28 +132,28 @@ if __name__ == "__main__":
     epochs = 100
     validation_split_size=0.3
     filepath = "./accuracy_excercise_02.txt"
-
-    for act in activation:
-        #Compile the model 
-        model=buildNetwork(in_dim,act)
-
-        # train model
-        history = train_model(model,X_train,Y_train,validation_split_size,learning_rate,batch_size,epochs)
-
-        # plot training loss& accuracy
-        plot_curves(history,class_1,act)
-
-        #Find the accuracy on test data
-        _, accuracy = model.evaluate(X_test, Y_test)
-        
-        print("=== Accuracy with "+str(act)+"= {:.2f}=== %".format(accuracy * 100))
-        Accuracy_list.append(accuracy)
-        
     with open(filepath, 'w') as f:
-        for i,acc in enumerate (activation):
-            f.write("Accuracy with ("+acc+"): ")
-            f.write( str(Accuracy_list[i]*100))
-            f.write("\n")
+        for neuron in number_neuron:
+            for act in activation:
+                #Compile the model 
+                model=buildNetwork(neuron,in_dim,act)
+
+                # train model
+                history = train_model(model,X_train,Y_train,validation_split_size,learning_rate,batch_size,epochs)
+
+                # plot training loss& accuracy
+                plot_curves(history,class_1,act,neuron)
+
+                #Find the accuracy on test data
+                _, accuracy = model.evaluate(X_test, Y_test)
+                
+                print("=== Accuracy with activation function "+str(act)+" and neuron number "+str(neuron)+ "= {:.2f}=== %".format(accuracy * 100))
+                Accuracy_list.append(accuracy)
+                
+            for i,acc in enumerate (activation):
+                f.write("Accuracy with activation function ("+acc+") and "+str(neuron)+" Neurons : ")
+                f.write( str(Accuracy_list[i]*100))
+                f.write("\n")
 
     print("Done.")
 

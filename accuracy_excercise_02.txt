@@ -1,3 +1,9 @@
-Accuracy with (relu): 99.48999881744385
-Accuracy with (sigmoid): 99.1100013256073
-Accuracy with (tanh): 99.41999912261963
+Accuracy with activation function (relu) and 64 Neurons : 99.44000244140625
+Accuracy with activation function (sigmoid) and 64 Neurons : 99.11999702453613
+Accuracy with activation function (tanh) and 64 Neurons : 99.40999746322632
+Accuracy with activation function (relu) and 128 Neurons : 99.44000244140625
+Accuracy with activation function (sigmoid) and 128 Neurons : 99.11999702453613
+Accuracy with activation function (tanh) and 128 Neurons : 99.40999746322632
+Accuracy with activation function (relu) and 256 Neurons : 99.44000244140625
+Accuracy with activation function (sigmoid) and 256 Neurons : 99.11999702453613
+Accuracy with activation function (tanh) and 256 Neurons : 99.40999746322632
